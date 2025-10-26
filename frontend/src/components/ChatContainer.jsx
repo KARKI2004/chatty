@@ -1,5 +1,5 @@
 import React from 'react'
-import { useChatStore } from '../store/usechatStore'
+import { useChatStore } from '../store/useChatStore'
 import { useEffect, useRef } from 'react';
 import MessageInput from './MessageInput';
 import ChatHeader from './ChatHeader';
@@ -8,24 +8,28 @@ import { useAuthStore } from '../store/useAuthStore';
 import { formatMessageTime } from '../lib/utils';
 
 const ChatContainer = () => {
-  const { messages, getMessages, isMessagesLoading, selectedUser } = useChatStore()
+  const { messages, getMessages, isMessagesLoading, selectedUser, listenToMessages, unListenToMessages } = useChatStore();
   const { authUser } = useAuthStore();
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     if (selectedUser && selectedUser._id) {
       getMessages(selectedUser._id);
-    }
-  }, [selectedUser._id, getMessages])
+      listenToMessages();
 
-  if (isMessagesLoading) {
-    return (
-      <div className="flex flex-col h-full w-full px-4 sm:px-6">
-        <ChatHeader />
-        <MessageSkeleton />
-        <MessageInput />
-      </div>
-    )
-  }
+      return () => unListenToMessages();   
+    }
+  }, [selectedUser._id, getMessages, listenToMessages, unListenToMessages]);
+
+
+  useEffect(() => {
+  const scroll = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  scroll();
+  const imgs = document.querySelectorAll("img");
+  imgs.forEach(i => i.addEventListener("load", scroll));
+  return () => imgs.forEach(i => i.removeEventListener("load", scroll));
+}, [messages]);
+
 
   return (
     <div className="flex flex-col h-full w-full px-4 sm:px-6">
@@ -36,9 +40,10 @@ const ChatContainer = () => {
           <div
             key={message._id}
             className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
+            ref={messagesEndRef}
           >
             <div className="chat-image avatar">
-              <div className="w-10 h-10 rounded-full border overflow-hidden">
+              <div className="w-10 h-10 rounded-full border">
               <img
                 src={message.senderId === authUser._id ?
                   authUser.profilePic || "/avatar.png"

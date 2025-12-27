@@ -15,16 +15,15 @@ export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
 
-const userSocketMap = {}; // to store online users {userId: socketId}
+const userSocketMap = {};
 
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
 
-  // socket.handshake.query is already an object, you don't need destructuring like that
   const userId = socket.handshake.query.userId;
   if (userId) userSocketMap[userId.toString()] = socket.id;
 
-  io.emit("GetOnlineUsers", Object.keys(userSocketMap)); // send online users to all clients
+  io.emit("GetOnlineUsers", Object.keys(userSocketMap)); 
 
   socket.on("disconnect", () => {
     console.log("A user disconnected", socket.id);

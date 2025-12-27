@@ -31,9 +31,9 @@ const LoginPage = () => {
               >
                 <MessageSquare className="w-6 h-6 text-[rgb(176,154,204)]" />
               </div>
-              <p className="text-xs uppercase tracking-[0.2em] text-base-content/50">Chatbox</p>
-              <h1 className="text-3xl font-bold mt-2 brand-serif">Welcome back</h1>
-              <p className="text-base-content/70">Sign in to continue the conversation.</p>
+              <p className="text-2xl uppercase font-extrabold tracking-[0.2em] text-[rgb(176,154,204)]">Chatty!</p>
+              <p className="text-sm mt-2 font-normal brand-serif">Welcome back</p>
+              <p className="text-base-content/70">Sign in to continue the conversations.</p>
             </div>
           </div>
 
@@ -49,7 +49,7 @@ const LoginPage = () => {
                 <input
                   type="email"
                   className="input input-bordered w-full pl-10 focus:outline-none focus:border-primary"
-                  placeholder="you@example.com"
+                  placeholder="demo@gmail.com / demo2@gmail.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -67,7 +67,7 @@ const LoginPage = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   className="input input-bordered w-full pl-10 focus:outline-none focus:border-primary"
-                  placeholder="********"
+                  placeholder="1234567 / 9876543"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />

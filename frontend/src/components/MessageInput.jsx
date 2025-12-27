@@ -79,7 +79,7 @@ const MessageInput = () => {
         <div className="flex-1 flex gap-2">
           <textarea
             rows={1}
-            className="w-full textarea textarea-bordered rounded-lg text-sm sm:text-base min-h-[2.5rem]"
+            className="w-full textarea rounded-2xl border border-[rgba(176,154,204,0.6)] focus:border-[rgba(176,154,204,0.9)] focus:outline-none text-sm sm:text-base min-h-[2.75rem] resize-none"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -101,16 +101,15 @@ const MessageInput = () => {
 
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className="hidden sm:flex p-2"
             onClick={() => fileInputRef.current?.click()}
           >
-            <Image size={20} />
+            <Image size={20} className="text-[rgb(176,154,204)]" />
           </button>
         </div>
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
+          className="p-2 -mt-1 -ml-0.5"
           disabled={!text.trim() && !imagePreview}
         >
           <Send size={22} className="text-[rgb(176,154,204)]" />

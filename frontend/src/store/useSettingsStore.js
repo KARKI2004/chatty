@@ -27,7 +27,6 @@ export const useSettingsStore = create((set, get) => ({
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     } catch {
-      // Ignore storage errors (private mode or blocked storage).
     }
   },
 }));

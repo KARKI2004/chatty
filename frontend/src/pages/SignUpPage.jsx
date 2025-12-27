@@ -50,7 +50,7 @@ const SignUpPage = () => {
             >
               <MessageSquare className="size-6 text-[rgb(176,154,204)]" />
             </div>
-            <p className="text-xs uppercase tracking-[0.2em] text-base-content/50">Chatbox</p>
+            <p className="text-xl uppercase font-extrabold tracking-[0.2em] text-[rgb(176,154,204)]">Chatty!</p>
             <h1 className="text-3xl font-bold mt-2 brand-serif">Create account</h1>
             <p className="text-base-content/70">
               Get started with your free account

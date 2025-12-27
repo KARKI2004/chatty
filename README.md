@@ -1,12 +1,13 @@
-# Chat App
+# Chatty!
 
 Full-stack real-time chat application with authentication and media messaging.
 
 Features
-- User sign up, login, and profile updates
+- User sign up, login, logout, and profile 
 - Real-time messaging
-- Image attachments via Cloudinary
-- Preferences for notifications, enter-to-send, and message previews
+- Friends and friend requests
+- Image attachments in chat and avatar uploads via Cloudinary
+- Preferences for notification sounds, enter-to-send, and message previews
 
 Tech stack
 - Frontend: React, Vite, Tailwind CSS, DaisyUI, Zustand
@@ -44,3 +45,4 @@ npm run dev
 Notes
 - The settings page stores preferences in local storage.
 - Notification sounds play only while the tab is active.
+- Started from a tutorial foundation and extended with custom features and UI.

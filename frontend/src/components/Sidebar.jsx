@@ -4,19 +4,30 @@ import SidebarSkeleton from './skeletons/SidebarSkeleton';
 import { Users } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import { useSettingsStore } from '../store/useSettingsStore';
+import { useFriendStore } from '../store/useFriendStore';
 
 const Sidebar = () => {
   const {getUsers, users, selectedUser, setSelectedUser, isUserLoading, lastMessageByUser} = useChatStore()
 
   const {onlineUsers}= useAuthStore();
   const { showMessagePreview } = useSettingsStore();
+  const { friends, fetchFriends } = useFriendStore();
   const [showOnlineOnly,setShowOnlineOnly] = useState(false);
+  const [showFriendsOnly, setShowFriendsOnly] = useState(false);
 
   useEffect(() => {
     getUsers()
-}, [getUsers])
+    fetchFriends()
+}, [getUsers, fetchFriends])
 
-const filteredUsers = showOnlineOnly ? users.filter(user => onlineUsers.includes(user._id)) : users; 
+const friendIds = new Set(friends.map((friend) => friend._id));
+let filteredUsers = users;
+if (showFriendsOnly) {
+  filteredUsers = filteredUsers.filter((user) => friendIds.has(user._id));
+}
+if (showOnlineOnly) {
+  filteredUsers = filteredUsers.filter((user) => onlineUsers.includes(user._id));
+}
 
 if(isUserLoading) return <SidebarSkeleton/>;
 
@@ -42,9 +53,26 @@ return (
                 borderColor: "rgb(176,154,204)"
               }}
             />
-            <span className="text-sm">Show online users </span>
+            <span className="text-sm">Show online</span>
           </label>
           <span className="text-xs text-zinc-500">({onlineUsers.length - 1} online)</span>
+        </div>
+
+        <div className="mt-2 hidden lg:flex items-center gap-2">
+          <label className="cursor-pointer flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={showFriendsOnly}
+              onChange={(e) => setShowFriendsOnly(e.target.checked)}
+              className="checkbox checkbox-sm"
+              style={{
+                ["--chkbg"]: "rgb(176,154,204)",
+                ["--chkfg"]: "rgb(176,154,204)",
+                borderColor: "rgb(176,154,204)"
+              }}
+            />
+            <span className="text-sm">Show friends only</span>
+          </label>
         </div>
       </div>
 
@@ -90,7 +118,7 @@ return (
         ))}
 
         {filteredUsers.length === 0 && (
-          <div className="text-center text-zinc-500 py-4">No online users</div>
+          <div className="text-center text-zinc-500 py-4">No users to show</div>
         )}
     </div>
   </aside>

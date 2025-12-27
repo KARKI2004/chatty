@@ -107,7 +107,6 @@ export const useChatStore = create((set, get) => ({
                         oscillator.stop(ctx.currentTime + 0.12);
                         oscillator.onended = () => ctx.close();
                     } catch {
-                        // Ignore audio errors.
                     }
                 }
             });
